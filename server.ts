@@ -21,6 +21,10 @@ const server = Bun.serve({
         headers: { "Content-Type": "application/wasm" },
       });
     },
+    "/fonts/Inter-Regular.woff2": async () => new Response(Bun.file("./public/fonts/Inter-Regular.woff2"), { headers: { "Content-Type": "font/woff2" } }),
+    "/fonts/Inter-Medium.woff2": async () => new Response(Bun.file("./public/fonts/Inter-Medium.woff2"), { headers: { "Content-Type": "font/woff2" } }),
+    "/fonts/Inter-SemiBold.woff2": async () => new Response(Bun.file("./public/fonts/Inter-SemiBold.woff2"), { headers: { "Content-Type": "font/woff2" } }),
+    "/fonts/Inter-Light.woff2": async () => new Response(Bun.file("./public/fonts/Inter-Light.woff2"), { headers: { "Content-Type": "font/woff2" } }),
   },
   development: {
     hmr: true,
