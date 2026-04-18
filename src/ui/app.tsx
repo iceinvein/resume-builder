@@ -9,9 +9,13 @@ import { FormTab } from "./form/form-tab";
 import { MdxTab } from "./editor/mdx-tab";
 import { ImportTab } from "./editor/import-tab";
 import { PreviewPane } from "./preview/preview-pane";
+import { EmptyState } from "./shell/empty-state";
+import { emptyResume } from "../schema/defaults";
 
 export function App() {
   const tab = useResumeStore((s) => s.tab);
+  const resume = useResumeStore((s) => s.resume);
+  const isFirstRun = resume.meta.name === emptyResume.meta.name && resume.experience.length === 0;
   const [lastSavedAt, setLastSavedAt] = useState<number | null>(null);
   const exportRef = useRef<() => Promise<Uint8Array>>(async () => new Uint8Array());
 
@@ -35,7 +39,7 @@ export function App() {
       }} lastSavedAt={lastSavedAt} />
       <Tabs />
       <TwoPane
-        left={tab === "form" ? <FormTab /> : tab === "mdx" ? <MdxTab /> : <ImportTab />}
+        left={isFirstRun ? <EmptyState /> : (tab === "form" ? <FormTab /> : tab === "mdx" ? <MdxTab /> : <ImportTab />)}
         right={<PreviewPane onExportReady={(fn) => { exportRef.current = fn; }} />}
       />
     </>
