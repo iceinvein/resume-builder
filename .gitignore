@@ -1,7 +1,5 @@
 node_modules/
 dist/
-public/*.js
-public/*.wasm
 bun.lock
 .DS_Store
 .playwright-mcp/

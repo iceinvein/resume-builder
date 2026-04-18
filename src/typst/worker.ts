@@ -5,6 +5,8 @@ import {
 } from "@myriaddreamin/typst.ts";
 import { loadFonts, disableDefaultFontAssets } from "@myriaddreamin/typst.ts/options.init";
 import type { WorkerRequest, WorkerResponse } from "./types";
+import compilerWasmUrl from "@myriaddreamin/typst-ts-web-compiler/pkg/typst_ts_web_compiler_bg.wasm?url";
+import rendererWasmUrl from "@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm?url";
 
 const compiler = createTypstCompiler();
 const renderer = createTypstRenderer();
@@ -39,10 +41,7 @@ async function init(): Promise<void> {
       const nonEmpty = fontBuffers.filter((b) => b.length > 0);
 
       await compiler.init({
-        // Provide explicit WASM URL so the worker can fetch it by absolute
-        // path rather than relying on import.meta.url resolution (which fails
-        // inside a bundled worker with no importer context).
-        getModule: () => fetch("/typst_ts_web_compiler_bg.wasm"),
+        getModule: () => fetch(compilerWasmUrl),
         beforeBuild: [
           // Use default text assets from jsDelivr when no local fonts exist.
           ...(nonEmpty.length === 0 ? [] : [disableDefaultFontAssets()]),
@@ -50,7 +49,7 @@ async function init(): Promise<void> {
         ],
       });
       await renderer.init({
-        getModule: () => fetch("/typst_ts_renderer_bg.wasm"),
+        getModule: () => fetch(rendererWasmUrl),
         beforeBuild: [
           ...(nonEmpty.length === 0 ? [] : [disableDefaultFontAssets()]),
           ...(nonEmpty.length > 0 ? [loadFonts(nonEmpty)] : []),

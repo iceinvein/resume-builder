@@ -5,7 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "types": ["bun-types"],
+    "types": ["bun-types", "vite/client"],
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "strict": true,
