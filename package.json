@@ -4,8 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --hot src/index.html",
-    "build": "bun build src/index.html --outdir dist --splitting",
+    "build:worker": "bun build src/typst/worker.ts --target=browser --outdir public --entry-naming typst-worker.js",
+    "dev": "bun run build:worker && bun --hot server.ts",
+    "build": "bun run build:worker && bun build src/index.html --outdir dist --splitting",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
   },

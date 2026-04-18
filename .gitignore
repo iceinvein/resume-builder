@@ -1,4 +1,6 @@
 node_modules/
 dist/
+public/
 bun.lock
 .DS_Store
+.playwright-mcp/

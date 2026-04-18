@@ -11,7 +11,7 @@ export class TypstClient {
   private pending = new Map<number, (r: WorkerResponse) => void>();
 
   constructor() {
-    this.worker = new Worker(new URL("./worker.ts", import.meta.url), {
+    this.worker = new Worker("/typst-worker.js", {
       type: "module",
     });
     this.worker.onmessage = (ev: MessageEvent<WorkerResponse>) => {
