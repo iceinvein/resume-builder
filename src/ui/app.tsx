@@ -11,6 +11,7 @@ import { ImportTab } from "./editor/import-tab";
 import { PreviewPane } from "./preview/preview-pane";
 import { EmptyState } from "./shell/empty-state";
 import { emptyResume } from "../schema/defaults";
+import { useShortcuts } from "./shell/shortcuts";
 
 export function App() {
   const tab = useResumeStore((s) => s.tab);
@@ -18,6 +19,8 @@ export function App() {
   const isFirstRun = resume.meta.name === emptyResume.meta.name && resume.experience.length === 0;
   const [lastSavedAt, setLastSavedAt] = useState<number | null>(null);
   const exportRef = useRef<() => Promise<Uint8Array>>(async () => new Uint8Array());
+
+  useShortcuts({ onSave: () => setLastSavedAt(Date.now()) });
 
   useEffect(() => {
     hydrate(resumeStore).then(() => setLastSavedAt(Date.now()));
