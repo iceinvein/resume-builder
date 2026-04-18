@@ -12,12 +12,15 @@ import { PreviewPane } from "./preview/preview-pane";
 import { EmptyState } from "./shell/empty-state";
 import { emptyResume } from "../schema/defaults";
 import { useShortcuts } from "./shell/shortcuts";
+import { probeEnv, type EnvStatus } from "./shell/env-check";
 
 export function App() {
   const tab = useResumeStore((s) => s.tab);
   const resume = useResumeStore((s) => s.resume);
   const isFirstRun = resume.meta.name === emptyResume.meta.name && resume.experience.length === 0;
   const [lastSavedAt, setLastSavedAt] = useState<number | null>(null);
+  const [env, setEnv] = useState<EnvStatus | null>(null);
+  useEffect(() => { probeEnv().then(setEnv); }, []);
   const exportRef = useRef<() => Promise<Uint8Array>>(async () => new Uint8Array());
 
   useShortcuts({ onSave: () => setLastSavedAt(Date.now()) });
@@ -40,6 +43,16 @@ export function App() {
         a.click();
         URL.revokeObjectURL(a.href);
       }} lastSavedAt={lastSavedAt} />
+      {env && !env.idb && (
+        <div style={{ background: "#fff4d6", padding: "8px 16px", fontSize: 13 }}>
+          Your browser is blocking local storage. Your resume will not be saved.
+        </div>
+      )}
+      {env && !env.wasm && (
+        <div style={{ background: "#fce5e5", padding: "8px 16px", fontSize: 13, color: "#8a1f1f" }}>
+          Your browser can't run the renderer. Please use Chrome, Firefox, or Safari 16+.
+        </div>
+      )}
       <Tabs />
       <TwoPane
         left={isFirstRun ? <EmptyState /> : (tab === "form" ? <FormTab /> : tab === "mdx" ? <MdxTab /> : <ImportTab />)}
