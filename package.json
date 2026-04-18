@@ -8,7 +8,8 @@
     "dev": "bun run build:worker && bun --hot server.ts",
     "build": "bun run build:worker && bun build src/index.html --outdir dist --splitting",
     "test": "bun test",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "e2e:serve": "bun run scripts/e2e.ts"
   },
   "dependencies": {
     "@codemirror/commands": "^6.10.3",
