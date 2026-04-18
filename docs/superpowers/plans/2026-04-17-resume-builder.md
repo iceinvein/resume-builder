@@ -149,8 +149,9 @@ Run: `bun run dev` (verify the URL loads, then stop)
 
 - [ ] **Step 11: Commit**
 
+Note: the repo is already initialized. The spec and plan live on the initial commit.
+
 ```bash
-git init
 git add .
 git commit -m "chore: scaffold bun+react+ts project"
 ```
