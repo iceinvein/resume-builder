@@ -3,7 +3,7 @@ import { InlineNodesSchema } from "./inline";
 
 const LinkSchema = z.object({
   label: z.string().min(1),
-  url: z.string().url(),
+  url: z.url(),
 });
 
 const EntryEndSchema = z.union([z.string().min(1), z.literal("present")]);
@@ -36,7 +36,7 @@ export const SkillsGroupSchema = z.object({
 export const ProjectSchema = z.object({
   name: z.string().min(1),
   description: z.string().optional(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   tech: z.array(z.string()).optional(),
   bullets: z.array(InlineNodesSchema).optional(),
 });
@@ -60,7 +60,7 @@ export const ResumeSchema = z.object({
     summary: InlineNodesSchema.optional(),
   }),
   contact: z.object({
-    email: z.string().email().optional(),
+    email: z.email().optional(),
     phone: z.string().optional(),
     location: z.string().optional(),
     links: z.array(LinkSchema).optional(),
