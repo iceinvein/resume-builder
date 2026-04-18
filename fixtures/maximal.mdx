@@ -1,0 +1,55 @@
+---
+name: Max Resume
+title: Principal Engineer
+summary: Full summary paragraph.
+---
+
+<Contact
+  email="max@example.com"
+  phone="+1 555 0100"
+  location="San Francisco, CA"
+  links={[
+    { label: "GitHub", url: "https://github.com/max" },
+    { label: "Site", url: "https://max.dev" }
+  ]}
+/>
+
+## Experience
+
+<Experience
+  company="BigCorp"
+  role="Principal Engineer"
+  location="Remote"
+  start="2022-06"
+  end="present"
+  tech={["Go", "Kubernetes"]}
+>
+- Led **migration** to [K8s](https://kubernetes.io).
+- Reduced cost by 30%.
+</Experience>
+
+<Experience company="SmallCo" role="Staff Engineer" start="2020-01" end="2022-05">
+- Built the thing.
+</Experience>
+
+## Education
+
+<Education institution="MIT" degree="BS" field="EECS" start="2016" end="2020" />
+
+## Skills
+
+<Skills group="Languages" items={["Go", "Rust", "TypeScript"]} />
+<Skills group="Tools" items={["Kubernetes", "AWS"]} />
+
+## Projects
+
+<Project name="OSS Thing" url="https://github.com/max/oss" tech={["Rust"]}>
+- Open source library for X.
+</Project>
+
+## Certifications
+
+<Extra heading="Certifications">
+  <Item title="AWS Solutions Architect" date="2023" />
+  <Item title="CKA" date="2022" />
+</Extra>
