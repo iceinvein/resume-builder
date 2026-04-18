@@ -7,6 +7,7 @@ import { bindAutosave, hydrate } from "../state/persist";
 import { resumeStore } from "../state/store";
 import { FormTab } from "./form/form-tab";
 import { MdxTab } from "./editor/mdx-tab";
+import { ImportTab } from "./editor/import-tab";
 
 export function App() {
   const tab = useResumeStore((s) => s.tab);
@@ -24,7 +25,7 @@ export function App() {
       <TopBar onExport={() => {}} lastSavedAt={lastSavedAt} />
       <Tabs />
       <TwoPane
-        left={tab === "form" ? <FormTab /> : tab === "mdx" ? <MdxTab /> : <div style={{ padding: 24 }}>Import tab</div>}
+        left={tab === "form" ? <FormTab /> : tab === "mdx" ? <MdxTab /> : <ImportTab />}
         right={<div style={{ padding: 24 }}>Preview goes here</div>}
       />
     </>
