@@ -9,6 +9,18 @@ const server = Bun.serve({
         headers: { "Content-Type": "application/javascript" },
       });
     },
+    "/typst_ts_web_compiler_bg.wasm": async () => {
+      const file = Bun.file("./public/typst_ts_web_compiler_bg.wasm");
+      return new Response(file, {
+        headers: { "Content-Type": "application/wasm" },
+      });
+    },
+    "/typst_ts_renderer_bg.wasm": async () => {
+      const file = Bun.file("./public/typst_ts_renderer_bg.wasm");
+      return new Response(file, {
+        headers: { "Content-Type": "application/wasm" },
+      });
+    },
   },
   development: {
     hmr: true,

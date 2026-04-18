@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build:worker": "bun build src/typst/worker.ts --target=browser --outdir public --entry-naming typst-worker.js",
+    "build:worker": "bun build src/typst/worker.ts --target=browser --outdir public --entry-naming typst-worker.js && cp node_modules/@myriaddreamin/typst-ts-web-compiler/pkg/typst_ts_web_compiler_bg.wasm public/ && cp node_modules/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm public/",
     "dev": "bun run build:worker && bun --hot server.ts",
     "build": "bun run build:worker && bun build src/index.html --outdir dist --splitting",
     "test": "bun test",
