@@ -5,6 +5,7 @@ import { TwoPane } from "./shell/layout";
 import { useResumeStore } from "./shell/use-store";
 import { bindAutosave, hydrate } from "../state/persist";
 import { resumeStore } from "../state/store";
+import { FormTab } from "./form/form-tab";
 
 export function App() {
   const tab = useResumeStore((s) => s.tab);
@@ -22,7 +23,7 @@ export function App() {
       <TopBar onExport={() => {}} lastSavedAt={lastSavedAt} />
       <Tabs />
       <TwoPane
-        left={<div style={{ padding: 24 }}>Tab: {tab}</div>}
+        left={tab === "form" ? <FormTab /> : <div style={{ padding: 24 }}>Tab: {tab}</div>}
         right={<div style={{ padding: 24 }}>Preview goes here</div>}
       />
     </>
