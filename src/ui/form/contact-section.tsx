@@ -1,66 +1,87 @@
-import { Row, Grid, Label, TextField } from "./fields";
-import { Section } from "../theme/section";
-import { Button } from "../theme/button";
+import { Label } from "../primitives/label";
+import { Input } from "../primitives/input";
+import { Button } from "../primitives/button";
+import { SortableList, SortableHandle } from "./sortable-list";
 import { useResumeStore } from "../shell/use-store";
 import { resumeStore } from "../../state/store";
 import { softRemove } from "../../state/undo";
 
 export function ContactSection() {
   const contact = useResumeStore((s) => s.resume.contact);
-  const update = resumeStore.getState().updateContact;
+  const { updateContact, moveLink } = resumeStore.getState();
   const links = contact.links ?? [];
   const updateLink = (i: number, patch: { label?: string; url?: string }) => {
-    update({ links: links.map((l, idx) => (idx === i ? { ...l, ...patch } : l)) });
+    updateContact({ links: links.map((l, idx) => (idx === i ? { ...l, ...patch } : l)) });
   };
-  const addLink = () => update({ links: [...links, { label: "", url: "" }] });
-  const removeLink = (i: number) => update({ links: links.filter((_, idx) => idx !== i) });
+  const addLink = () => updateContact({ links: [...links, { label: "", url: "" }] });
+  const removeLink = (i: number) =>
+    updateContact({ links: links.filter((_, idx) => idx !== i) });
 
   return (
-    <Section title="Contact" hint="Email and phone are optional. Links render as a row under your name.">
-      <Grid columns={2}>
-        <div>
-          <Label>Email</Label>
-          <TextField value={contact.email ?? ""} onChange={(e) => update({ email: e.target.value || undefined })} />
+    <div className="grid gap-md">
+      <div className="grid grid-cols-2 gap-sm">
+        <div className="grid gap-2xs">
+          <Label htmlFor="contact-email">Email</Label>
+          <Input
+            id="contact-email"
+            type="email"
+            value={contact.email ?? ""}
+            onChange={(e) => updateContact({ email: e.target.value || undefined })}
+          />
         </div>
-        <div>
-          <Label>Phone</Label>
-          <TextField value={contact.phone ?? ""} onChange={(e) => update({ phone: e.target.value || undefined })} />
+        <div className="grid gap-2xs">
+          <Label htmlFor="contact-phone">Phone</Label>
+          <Input
+            id="contact-phone"
+            value={contact.phone ?? ""}
+            onChange={(e) => updateContact({ phone: e.target.value || undefined })}
+          />
         </div>
-      </Grid>
-      <Row>
-        <Label>Location</Label>
-        <TextField value={contact.location ?? ""} onChange={(e) => update({ location: e.target.value || undefined })} />
-      </Row>
-      <div style={{ display: "grid", gap: "var(--space-xs)" }}>
+      </div>
+      <div className="grid gap-2xs">
+        <Label htmlFor="contact-location">Location</Label>
+        <Input
+          id="contact-location"
+          value={contact.location ?? ""}
+          onChange={(e) => updateContact({ location: e.target.value || undefined })}
+        />
+      </div>
+      <div className="grid gap-xs">
         <Label>Links</Label>
-        {links.map((l, i) => (
-          <div
-            key={i}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 2fr auto",
-              gap: "var(--space-xs)",
-              alignItems: "center",
-            }}
-          >
-            <TextField placeholder="Label" value={l.label} onChange={(e) => updateLink(i, { label: e.target.value })} />
-            <TextField placeholder="URL" value={l.url} onChange={(e) => updateLink(i, { url: e.target.value })} />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                const name = l.label || l.url || "link";
-                softRemove(`Removed ${name}`, () => removeLink(i));
-              }}
-            >
-              Remove
-            </Button>
-          </div>
-        ))}
+        <SortableList
+          items={links}
+          keyFor={(_, i) => `link-${i}`}
+          onReorder={moveLink}
+          renderItem={(l, i) => (
+            <div className="grid grid-cols-[auto_1fr_2fr_auto] items-center gap-xs">
+              <SortableHandle aria-label={`Drag link ${i + 1}`} />
+              <Input
+                placeholder="Label"
+                value={l.label}
+                onChange={(e) => updateLink(i, { label: e.target.value })}
+              />
+              <Input
+                placeholder="URL"
+                value={l.url}
+                onChange={(e) => updateLink(i, { url: e.target.value })}
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  const name = l.label || l.url || "link";
+                  softRemove(`Removed ${name}`, () => removeLink(i));
+                }}
+              >
+                Remove
+              </Button>
+            </div>
+          )}
+        />
         <div>
           <Button variant="ghost" size="sm" onClick={addLink}>+ Add link</Button>
         </div>
       </div>
-    </Section>
+    </div>
   );
 }
