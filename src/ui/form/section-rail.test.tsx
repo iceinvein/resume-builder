@@ -11,8 +11,8 @@ const items = [
 
 test("renders items with counts", () => {
   render(<SectionRail active="meta" items={items} onActivate={() => {}} />);
-  expect(screen.getByRole("tab", { name: /^Meta/i }).getAttribute("aria-selected")).toBe("true");
-  expect(screen.getByRole("tab", { name: /Experience/i }).textContent).toMatch(/3/);
+  expect(screen.getByRole("button", { name: /^Meta/i }).getAttribute("aria-current")).toBe("page");
+  expect(screen.getByRole("button", { name: /Experience/i }).textContent).toMatch(/3/);
   cleanup();
 });
 
@@ -20,7 +20,7 @@ test("click activates a section", async () => {
   const onActivate = mock((_id: string) => {});
   const user = userEvent.setup();
   render(<SectionRail active="meta" items={items} onActivate={onActivate} />);
-  await user.click(screen.getByRole("tab", { name: /Skills/i }));
+  await user.click(screen.getByRole("button", { name: /Skills/i }));
   expect(onActivate).toHaveBeenCalledWith("skills");
   cleanup();
 });
@@ -29,7 +29,7 @@ test("arrow keys move selection", async () => {
   const onActivate = mock((_id: string) => {});
   const user = userEvent.setup();
   render(<SectionRail active="meta" items={items} onActivate={onActivate} />);
-  const meta = screen.getByRole("tab", { name: /^Meta/i });
+  const meta = screen.getByRole("button", { name: /^Meta/i });
   meta.focus();
   await user.keyboard("{ArrowDown}");
   expect(onActivate).toHaveBeenCalledWith("experience");

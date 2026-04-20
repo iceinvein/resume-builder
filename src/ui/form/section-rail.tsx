@@ -45,8 +45,7 @@ export function SectionRail({ items, active, onActivate, className }: Props) {
 
   return (
     <nav
-      role="tablist"
-      aria-orientation="vertical"
+      aria-label="Resume sections"
       className={cn("flex flex-col gap-2xs py-md pr-md w-[200px] shrink-0", className)}
     >
       {items.map((item, i) => {
@@ -55,8 +54,8 @@ export function SectionRail({ items, active, onActivate, className }: Props) {
           <button
             key={item.id}
             ref={(el) => { refs.current[i] = el; }}
-            role="tab"
-            aria-selected={isActive}
+            type="button"
+            aria-current={isActive ? "page" : undefined}
             tabIndex={isActive ? 0 : -1}
             onClick={() => onActivate(item.id)}
             onKeyDown={(e) => onKey(e, i)}
