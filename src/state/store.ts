@@ -20,15 +20,20 @@ export type ResumeStore = {
   addEducation: () => void;
   updateEducation: (i: number, patch: Partial<Education>) => void;
   removeEducation: (i: number) => void;
+  moveEducation: (from: number, to: number) => void;
   addSkillsGroup: () => void;
   updateSkillsGroup: (i: number, patch: Partial<{ group?: string; items: string[] }>) => void;
   removeSkillsGroup: (i: number) => void;
+  moveSkillsGroup: (from: number, to: number) => void;
   addProject: () => void;
   updateProject: (i: number, patch: Partial<Project>) => void;
   removeProject: (i: number) => void;
+  moveProject: (from: number, to: number) => void;
   addExtra: () => void;
   updateExtra: (i: number, patch: Partial<Extra>) => void;
   removeExtra: (i: number) => void;
+  moveExtra: (from: number, to: number) => void;
+  moveLink: (from: number, to: number) => void;
 };
 
 export function createResumeStore() {
@@ -86,6 +91,13 @@ export function createResumeStore() {
       set((s) => ({
         resume: { ...s.resume, education: s.resume.education.filter((_, idx) => idx !== i) },
       })),
+    moveEducation: (from, to) =>
+      set((s) => {
+        const arr = [...s.resume.education];
+        const [item] = arr.splice(from, 1);
+        if (item) arr.splice(to, 0, item);
+        return { resume: { ...s.resume, education: arr } };
+      }),
     addSkillsGroup: () =>
       set((s) => ({ resume: { ...s.resume, skills: [...s.resume.skills, { items: [""] }] } })),
     updateSkillsGroup: (i, patch) =>
@@ -99,6 +111,13 @@ export function createResumeStore() {
       set((s) => ({
         resume: { ...s.resume, skills: s.resume.skills.filter((_, idx) => idx !== i) },
       })),
+    moveSkillsGroup: (from, to) =>
+      set((s) => {
+        const arr = [...s.resume.skills];
+        const [item] = arr.splice(from, 1);
+        if (item) arr.splice(to, 0, item);
+        return { resume: { ...s.resume, skills: arr } };
+      }),
     addProject: () =>
       set((s) => ({
         resume: { ...s.resume, projects: [...(s.resume.projects ?? []), { name: "" }] },
@@ -114,6 +133,13 @@ export function createResumeStore() {
       set((s) => ({
         resume: { ...s.resume, projects: (s.resume.projects ?? []).filter((_, idx) => idx !== i) },
       })),
+    moveProject: (from, to) =>
+      set((s) => {
+        const arr = [...(s.resume.projects ?? [])];
+        const [item] = arr.splice(from, 1);
+        if (item) arr.splice(to, 0, item);
+        return { resume: { ...s.resume, projects: arr } };
+      }),
     addExtra: () =>
       set((s) => ({
         resume: {
@@ -132,6 +158,20 @@ export function createResumeStore() {
       set((s) => ({
         resume: { ...s.resume, extras: (s.resume.extras ?? []).filter((_, idx) => idx !== i) },
       })),
+    moveExtra: (from, to) =>
+      set((s) => {
+        const arr = [...(s.resume.extras ?? [])];
+        const [item] = arr.splice(from, 1);
+        if (item) arr.splice(to, 0, item);
+        return { resume: { ...s.resume, extras: arr } };
+      }),
+    moveLink: (from, to) =>
+      set((s) => {
+        const arr = [...(s.resume.contact.links ?? [])];
+        const [item] = arr.splice(from, 1);
+        if (item) arr.splice(to, 0, item);
+        return { resume: { ...s.resume, contact: { ...s.resume.contact, links: arr } } };
+      }),
   }));
 }
 
