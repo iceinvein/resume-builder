@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useResumeStore } from "../shell/use-store";
 import { useTypstRender } from "./use-typst-render";
 import { SvgPage } from "./svg-page";
-import { Button } from "../theme/button";
+import { Button } from "../primitives/button";
 
 const ZOOM_STORAGE_KEY = "resume-builder:preview-zoom";
 const ZOOM_MIN = 0.5;

@@ -1,6 +1,6 @@
 import { useResumeStore } from "./use-store";
 import { resumeStore } from "../../state/store";
-import { Button } from "../theme/button";
+import { Button } from "../primitives/button";
 import { Kbd } from "../theme/kbd";
 
 export type TopBarProps = {

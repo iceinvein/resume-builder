@@ -3,7 +3,7 @@ import { parseMdxToResume } from "../../mdx/parse";
 import { resumeStore } from "../../state/store";
 import { emptyResume } from "../../schema/defaults";
 import type { Resume } from "../../schema/resume";
-import { Button } from "../theme/button";
+import { Button } from "../primitives/button";
 
 function isResumeDirty(r: Resume): boolean {
   return JSON.stringify(r) !== JSON.stringify(emptyResume);

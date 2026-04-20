@@ -1,7 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { resumeStore } from "../../state/store";
 import { exampleResume, emptyResume } from "../../schema/defaults";
-import { Button } from "../theme/button";
+import { Button } from "../primitives/button";
 import { Kbd } from "../theme/kbd";
 
 type Choice = {

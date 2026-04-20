@@ -1,4 +1,4 @@
-import { Button } from "./button";
+import { Button } from "../primitives/button";
 import { dismissToast, pauseToastTimers, useToasts } from "../../state/toasts";
 
 export function ToastPortal() {
