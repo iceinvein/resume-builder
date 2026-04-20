@@ -1,21 +1,39 @@
-import { Grid, Label, TextField } from "./fields";
-import { Section } from "../theme/section";
-import { Button } from "../theme/button";
+import { Label } from "../primitives/label";
+import { Input } from "../primitives/input";
+import { Button } from "../primitives/button";
+import { SortableList } from "./sortable-list";
+import { FormCard } from "./form-card";
+import { ChipInput } from "./chip-input";
 import { useResumeStore } from "../shell/use-store";
 import { resumeStore } from "../../state/store";
 import { softRemove } from "../../state/undo";
 
 export function SkillsSection() {
   const skills = useResumeStore((s) => s.resume.skills);
-  const { updateSkillsGroup, removeSkillsGroup, addSkillsGroup } = resumeStore.getState();
+  const { updateSkillsGroup, removeSkillsGroup, addSkillsGroup, moveSkillsGroup } =
+    resumeStore.getState();
+
   return (
-    <Section title="Skills" hint="Group related skills together; leave the group blank for a flat list.">
-      {skills.map((g, i) => (
-        <div key={i} style={{ display: "grid", gap: "var(--space-xs)" }}>
-          <Grid columns={2}>
-            <div>
-              <Label>Group</Label>
-              <TextField
+    <div className="grid gap-md">
+      <SortableList
+        items={skills}
+        keyFor={(_, i) => `skill-${i}`}
+        onReorder={moveSkillsGroup}
+        renderItem={(g, i) => (
+          <FormCard
+            title={g.group || "Group"}
+            subtitle={`${g.items.length} ${g.items.length === 1 ? "skill" : "skills"}`}
+            removeLabel="Remove group"
+            dragLabel={`Drag ${g.group || "group"}`}
+            onRemove={() => {
+              const label = g.group || "skills group";
+              softRemove(`Removed ${label}`, () => removeSkillsGroup(i));
+            }}
+          >
+            <div className="grid gap-2xs">
+              <Label htmlFor={`skill-group-${i}`}>Group</Label>
+              <Input
+                id={`skill-group-${i}`}
                 placeholder="e.g. Languages"
                 value={g.group ?? ""}
                 onChange={(e) => {
@@ -25,32 +43,20 @@ export function SkillsSection() {
                 }}
               />
             </div>
-            <div>
+            <div className="grid gap-2xs">
               <Label>Skills</Label>
-              <TextField
-                placeholder="TypeScript, Rust, Python"
-                value={g.items.join(", ")}
-                onChange={(e) => updateSkillsGroup(i, { items: e.target.value.split(",").map((x) => x.trim()).filter(Boolean) })}
+              <ChipInput
+                placeholder="Add skill"
+                value={g.items}
+                onChange={(next) => updateSkillsGroup(i, { items: next })}
               />
             </div>
-          </Grid>
-          <div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                const label = g.group || "skills group";
-                softRemove(`Removed ${label}`, () => removeSkillsGroup(i));
-              }}
-            >
-              Remove group
-            </Button>
-          </div>
-        </div>
-      ))}
+          </FormCard>
+        )}
+      />
       <div>
         <Button variant="ghost" size="sm" onClick={addSkillsGroup}>+ Add skills group</Button>
       </div>
-    </Section>
+    </div>
   );
 }
