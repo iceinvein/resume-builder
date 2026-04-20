@@ -4,6 +4,7 @@ import { resumeStore } from "../../state/store";
 import { emptyResume } from "../../schema/defaults";
 import type { Resume } from "../../schema/resume";
 import { Button } from "../primitives/button";
+import { Textarea } from "../primitives/textarea";
 
 function isResumeDirty(r: Resume): boolean {
   return JSON.stringify(r) !== JSON.stringify(emptyResume);
@@ -104,11 +105,10 @@ export function ImportTab() {
         </div>
       </div>
       <div style={{ color: "var(--color-text-secondary)" }}>or paste MDX below:</div>
-      <textarea
+      <Textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className="font-mono"
-        style={{ width: "100%", minHeight: 240 }}
+        className="font-mono min-h-[240px]"
       />
       <div>
         <Button variant="primary" onClick={() => attemptImport(text)}>Import pasted MDX</Button>

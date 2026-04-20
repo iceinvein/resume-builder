@@ -1,6 +1,7 @@
 import { useResumeStore } from "./use-store";
 import { resumeStore } from "../../state/store";
 import { Button } from "../primitives/button";
+import { Input } from "../primitives/input";
 import { Kbd } from "../theme/kbd";
 
 export type TopBarProps = {
@@ -36,11 +37,11 @@ export function TopBar({ onExport, exporting, lastSavedAt }: TopBarProps) {
           <Kbd>{["⌘", "K"]}</Kbd>
         </span>
       </div>
-      <input
+      <Input
         value={name}
         aria-label="Resume filename"
         onChange={(e) => resumeStore.setState({ name: e.target.value })}
-        style={{ flex: 1 }}
+        className="flex-1"
       />
       <span className="caption tabular-nums" style={{ color: "var(--color-text-tertiary)" }}>
         {formatSaved(lastSavedAt)}
