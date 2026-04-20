@@ -14,11 +14,13 @@ const renderer = createTypstRenderer();
 const RESUME_JSON_PATH = "/resume.json";
 const MAIN_PATH = "/main.typ";
 
+// Typst's font parser handles TTF/OTF directly; it does NOT decompress WOFF2.
+// Keep these as TTF to ensure glyphs render in the preview SVG and exported PDF.
 const FONT_URLS = [
-  "/fonts/Inter-Regular.woff2",
-  "/fonts/Inter-Medium.woff2",
-  "/fonts/Inter-SemiBold.woff2",
-  "/fonts/Inter-Light.woff2",
+  "/fonts/Inter-Regular.ttf",
+  "/fonts/Inter-Medium.ttf",
+  "/fonts/Inter-SemiBold.ttf",
+  "/fonts/Inter-Light.ttf",
 ];
 
 let ready: Promise<void> | null = null;

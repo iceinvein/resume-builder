@@ -2,32 +2,35 @@ import type { Tab } from "../../state/store";
 import { useResumeStore } from "./use-store";
 import { resumeStore } from "../../state/store";
 
-const TABS: Array<{ id: Tab; label: string }> = [
-  { id: "form", label: "Form" },
-  { id: "mdx", label: "MDX" },
-  { id: "import", label: "Import" },
+const TABS: Array<{ id: Tab; label: string; hint: string }> = [
+  { id: "form", label: "Form", hint: "Structured fields for every section (⌘1)" },
+  { id: "mdx", label: "MDX", hint: "Edit the raw source: markdown with inline React components (⌘2)" },
+  { id: "import", label: "Import", hint: "Drop or paste an .mdx file to replace your draft (⌘3)" },
 ];
 
 export function Tabs() {
   const tab = useResumeStore((s) => s.tab);
   return (
-    <div style={{ display: "flex", borderBottom: "1px solid #e6e3dd" }}>
-      {TABS.map((t) => (
-        <button
-          key={t.id}
-          onClick={() => resumeStore.setState({ tab: t.id })}
-          style={{
-            padding: "10px 16px",
-            border: "none",
-            background: tab === t.id ? "#fff" : "transparent",
-            borderBottom: tab === t.id ? "2px solid #1a1a1a" : "2px solid transparent",
-            cursor: "pointer",
-            fontSize: 13,
-          }}
-        >
-          {t.label}
-        </button>
-      ))}
+    <div
+      className="surface-divider"
+      style={{ display: "flex", background: "var(--color-canvas)" }}
+      role="tablist"
+    >
+      {TABS.map((t) => {
+        const active = tab === t.id;
+        return (
+          <button
+            key={t.id}
+            role="tab"
+            aria-selected={active}
+            title={t.hint}
+            onClick={() => resumeStore.setState({ tab: t.id })}
+            className="tab"
+          >
+            {t.label}
+          </button>
+        );
+      })}
     </div>
   );
 }

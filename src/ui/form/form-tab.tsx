@@ -8,7 +8,14 @@ import { ExtrasSection } from "./extras-section";
 
 export function FormTab() {
   return (
-    <div style={{ padding: 24, display: "grid", gap: 28 }}>
+    <div
+      style={{
+        padding: "var(--space-xl) var(--space-lg)",
+        display: "grid",
+        gap: "var(--space-2xl)",
+        maxWidth: "68ch",
+      }}
+    >
       <MetaSection />
       <ContactSection />
       <ExperienceSection />

@@ -1,4 +1,5 @@
 import { Row, Label, TextField, TextArea } from "./fields";
+import { Section } from "../theme/section";
 import { useResumeStore } from "../shell/use-store";
 import { resumeStore } from "../../state/store";
 import { mdToInlineNodes, inlineNodesToMd } from "../../mdx/inline";
@@ -8,19 +9,23 @@ export function MetaSection() {
   const update = resumeStore.getState().updateMeta;
   const summaryMd = meta.summary ? inlineNodesToMd(meta.summary) : "";
   return (
-    <section>
-      <h2 style={{ fontSize: 13, textTransform: "uppercase", letterSpacing: "0.08em" }}>Header</h2>
+    <Section title="Profile" hint="Your name, role, and an optional summary line. Summary supports markdown.">
       <Row>
         <Label>Full name</Label>
         <TextField value={meta.name} onChange={(e) => update({ name: e.target.value })} />
       </Row>
       <Row>
         <Label>Title</Label>
-        <TextField value={meta.title ?? ""} onChange={(e) => update({ title: e.target.value || undefined })} />
+        <TextField
+          placeholder="e.g. Senior Software Engineer"
+          value={meta.title ?? ""}
+          onChange={(e) => update({ title: e.target.value || undefined })}
+        />
       </Row>
       <Row>
-        <Label>Summary (markdown)</Label>
+        <Label>Summary</Label>
         <TextArea
+          placeholder="A short paragraph that goes at the top of your resume. Markdown works."
           value={summaryMd}
           onChange={(e) => {
             const text = e.target.value;
@@ -28,6 +33,6 @@ export function MetaSection() {
           }}
         />
       </Row>
-    </section>
+    </Section>
   );
 }

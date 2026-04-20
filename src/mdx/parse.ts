@@ -165,6 +165,18 @@ export async function parseMdxToResume(source: string): Promise<Resume> {
   }
 
   const parsed = ResumeSchema.safeParse(resume);
-  if (!parsed.success) throw new Error(`Schema validation failed: ${parsed.error.message}`);
+  if (!parsed.success) throw new Error(formatValidationError(parsed.error.issues));
   return parsed.data;
+}
+
+function formatValidationError(issues: ReadonlyArray<{ path: ReadonlyArray<PropertyKey>; message: string }>): string {
+  if (issues.length === 0) return "Import failed: the MDX does not match the resume schema.";
+  const lines = issues.map((issue) => {
+    const fieldPath = issue.path.length > 0 ? issue.path.join(".") : "document";
+    return `- ${fieldPath}: ${issue.message}`;
+  });
+  const header = issues.length === 1
+    ? "Import failed. Please fix the following issue:"
+    : `Import failed. Please fix the following ${issues.length} issues:`;
+  return `${header}\n${lines.join("\n")}`;
 }

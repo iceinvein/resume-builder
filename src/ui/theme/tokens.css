@@ -1,0 +1,205 @@
+/*
+ * Design tokens.
+ *
+ * Neutrals are tinted toward hue 85 (warm amber) so the app reads as paper
+ * rather than UI. The single sharp accent sits at hue 30 (deep rust, ink-like
+ * on paper) and is used sparingly: primary action, focus ring, save pulse.
+ *
+ * Dark theme mirrors perceptual lightness rather than inverting. Chroma is
+ * reduced at lightness extremes so colors don't glow.
+ *
+ * Theme selection:
+ *   - defaults to the user's prefers-color-scheme.
+ *   - `<html data-theme="light">` / `data-theme="dark">` overrides the media
+ *     query, so a future toggle can force a mode without reloading.
+ */
+
+:root {
+  /* Space. 4pt scale with semantic names. */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Radii. Small per the brief's precision principle. */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 999px;
+
+  /* Borders. Hairlines only; the precision reads through alignment, not weight. */
+  --border-hairline: 1px;
+  --border-strong: 2px;
+
+  /* Motion. Exponential easing; layout animations are not used. */
+  --duration-instant: 80ms;
+  --duration-fast: 180ms;
+  --duration-med: 280ms;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Layering. */
+  --z-toast: 100;
+  --z-palette: 200;
+}
+
+/* Light theme: the default. Paper-warm surfaces, deep rust accent. */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-canvas: oklch(0.985 0.006 85);      /* page background, top bar */
+  --color-surface: oklch(0.965 0.008 85);     /* preview pane bg, section surface */
+  --color-surface-muted: oklch(0.955 0.009 85); /* code/editor surface */
+  --color-surface-raised: oklch(0.990 0.005 85); /* active tab, input background */
+
+  --color-border-subtle: oklch(0.92 0.008 85);
+  --color-border: oklch(0.88 0.010 85);
+  --color-border-strong: oklch(0.78 0.012 85);
+
+  --color-text: oklch(0.22 0.012 85);         /* primary text */
+  --color-text-secondary: oklch(0.45 0.010 85);
+  --color-text-tertiary: oklch(0.60 0.008 85);
+  --color-text-disabled: oklch(0.75 0.006 85);
+
+  --color-accent: oklch(0.47 0.14 30);        /* deep rust */
+  --color-accent-hover: oklch(0.42 0.14 30);
+  --color-accent-active: oklch(0.38 0.14 30);
+  --color-on-accent: oklch(0.985 0.008 85);   /* text color on accent surfaces */
+  --color-accent-soft: oklch(0.95 0.035 30);  /* soft tinted bg (save pulse) */
+  --color-accent-soft-text: oklch(0.35 0.12 30);
+
+  --color-danger: oklch(0.50 0.15 27);
+  --color-danger-soft: oklch(0.94 0.045 27);
+  --color-danger-soft-text: oklch(0.38 0.15 27);
+
+  --color-warning: oklch(0.70 0.14 80);
+  --color-warning-soft: oklch(0.95 0.035 85);
+  --color-warning-soft-text: oklch(0.40 0.10 80);
+
+  --color-success: oklch(0.50 0.09 145);
+  --color-success-soft: oklch(0.94 0.035 145);
+  --color-success-soft-text: oklch(0.35 0.08 145);
+
+  /* The paper color for the rendered PDF preview. Deliberately fixed; the
+   * preview always shows the PDF as it will print, independent of theme. */
+  --color-paper: oklch(1.000 0 0);
+  --color-paper-edge: oklch(0.88 0.008 85);
+
+  /* Focus ring: offset plus a rust halo. Visible against canvas and surface. */
+  --focus-ring-color: oklch(0.47 0.14 30 / 0.55);
+  --focus-ring:
+    0 0 0 2px var(--color-canvas),
+    0 0 0 4px var(--focus-ring-color);
+}
+
+/* Dark theme. Applies when the user prefers dark OR when explicitly set via
+ * data-theme. Hue family is preserved; lightness mirrors are perceptually
+ * tuned, not mathematically inverted. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    /* Light text on dark reads as lighter weight and needs more breathing
+     * room. Bump leading (from type.css defaults) by 0.05. */
+    --leading-normal: 1.6;
+    --leading-snug: 1.4;
+
+    --color-canvas: oklch(0.19 0.006 85);
+    --color-surface: oklch(0.22 0.008 85);
+    --color-surface-muted: oklch(0.24 0.009 85);
+    --color-surface-raised: oklch(0.27 0.010 85);
+
+    --color-border-subtle: oklch(0.28 0.010 85);
+    --color-border: oklch(0.34 0.012 85);
+    --color-border-strong: oklch(0.46 0.014 85);
+
+    --color-text: oklch(0.94 0.008 85);
+    --color-text-secondary: oklch(0.72 0.009 85);
+    --color-text-tertiary: oklch(0.58 0.008 85);
+    --color-text-disabled: oklch(0.45 0.006 85);
+
+    --color-accent: oklch(0.72 0.12 30);
+    --color-accent-hover: oklch(0.78 0.12 30);
+    --color-accent-active: oklch(0.82 0.12 30);
+    --color-on-accent: oklch(0.15 0.010 85);
+    --color-accent-soft: oklch(0.32 0.05 30);
+    --color-accent-soft-text: oklch(0.88 0.10 30);
+
+    --color-danger: oklch(0.72 0.14 27);
+    --color-danger-soft: oklch(0.30 0.06 27);
+    --color-danger-soft-text: oklch(0.90 0.12 27);
+
+    --color-warning: oklch(0.80 0.12 80);
+    --color-warning-soft: oklch(0.30 0.06 85);
+    --color-warning-soft-text: oklch(0.88 0.12 80);
+
+    --color-success: oklch(0.75 0.10 145);
+    --color-success-soft: oklch(0.28 0.05 145);
+    --color-success-soft-text: oklch(0.86 0.10 145);
+
+    --color-paper: oklch(0.98 0.005 85);
+    --color-paper-edge: oklch(0.86 0.008 85);
+
+    --focus-ring-color: oklch(0.78 0.12 30 / 0.6);
+    --focus-ring:
+      0 0 0 2px var(--color-canvas),
+      0 0 0 4px var(--focus-ring-color);
+  }
+}
+
+/* Explicit dark theme override (for a future manual toggle). Same values as
+ * the media query branch; lives separately so `data-theme="dark"` wins over
+ * the OS preference. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --leading-normal: 1.6;
+  --leading-snug: 1.4;
+
+  --color-canvas: oklch(0.19 0.006 85);
+  --color-surface: oklch(0.22 0.008 85);
+  --color-surface-muted: oklch(0.24 0.009 85);
+  --color-surface-raised: oklch(0.27 0.010 85);
+
+  --color-border-subtle: oklch(0.28 0.010 85);
+  --color-border: oklch(0.34 0.012 85);
+  --color-border-strong: oklch(0.46 0.014 85);
+
+  --color-text: oklch(0.94 0.008 85);
+  --color-text-secondary: oklch(0.72 0.009 85);
+  --color-text-tertiary: oklch(0.58 0.008 85);
+  --color-text-disabled: oklch(0.45 0.006 85);
+
+  --color-accent: oklch(0.72 0.12 30);
+  --color-accent-hover: oklch(0.78 0.12 30);
+  --color-accent-active: oklch(0.82 0.12 30);
+  --color-on-accent: oklch(0.15 0.010 85);
+  --color-accent-soft: oklch(0.32 0.05 30);
+  --color-accent-soft-text: oklch(0.88 0.10 30);
+
+  --color-danger: oklch(0.72 0.14 27);
+  --color-danger-soft: oklch(0.30 0.06 27);
+  --color-danger-soft-text: oklch(0.90 0.12 27);
+
+  --color-warning: oklch(0.80 0.12 80);
+  --color-warning-soft: oklch(0.30 0.06 85);
+  --color-warning-soft-text: oklch(0.88 0.12 80);
+
+  --color-success: oklch(0.75 0.10 145);
+  --color-success-soft: oklch(0.28 0.05 145);
+  --color-success-soft-text: oklch(0.86 0.10 145);
+
+  --color-paper: oklch(0.98 0.005 85);
+  --color-paper-edge: oklch(0.86 0.008 85);
+
+  --focus-ring-color: oklch(0.78 0.12 30 / 0.6);
+  --focus-ring:
+    0 0 0 2px var(--color-canvas),
+    0 0 0 4px var(--focus-ring-color);
+}

@@ -1,0 +1,136 @@
+/*
+ * Type tokens and base typography.
+ *
+ * Scale is a fixed rem-based 5-step modular scale (1.25 between the main tiers
+ * plus a shared small tier for labels/kbd chips). Fixed rather than fluid is
+ * the right call for a dense app UI; fluid clamps belong on marketing headings.
+ *
+ * Hierarchy strategy: sizes do not do all the work. Weight contrast, color,
+ * and case carry hierarchy alongside size so section titles feel clearly above
+ * field labels without ballooning to a billboard size.
+ */
+
+:root {
+  /* Families. Inter is explicitly rejected in the design brief. Hanken Grotesk
+   * is the warm neo-grotesque for UI and body; Azeret Mono handles MDX, dates,
+   * keyboard shortcuts, and any tabular context. */
+  --font-sans: "Hanken Grotesk Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Azeret Mono Variable", ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, Consolas, monospace;
+
+  /* Size scale. The shared 0.75rem small tier covers labels and kbd chips;
+   * weight and case differentiate them so hierarchy reads without adding
+   * another close-neighbor size. */
+  --text-xs: 0.75rem;     /* 12px  labels, kbd chips, captions, tertiary meta */
+  --text-sm: 0.9375rem;   /* 15px  body, inputs, buttons, tabs */
+  --text-md: 1.1875rem;   /* 19px  section titles */
+  --text-lg: 1.5rem;      /* 24px  panel headings (reserved) */
+  --text-xl: 1.875rem;    /* 30px  display moments (empty-state headline) */
+
+  /* Weights. Hanken Grotesk is a variable font, so intermediate weights are
+   * cheap. We only use four tiers to keep the system legible. */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line-heights. Tighter for display, looser for running body. */
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.55;
+
+  /* Letter-spacing. Larger type can tighten; small text gets a touch of
+   * tracking; body stays at the font's natural spacing. */
+  --track-tight: -0.01em;
+  --track-normal: 0;
+  --track-wide: 0.02em;
+}
+
+/* Base document typography. Applies body defaults once, so component code
+ * stops re-declaring font-family on every element. */
+html {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: inherit;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-regular);
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Form controls inherit by default in most browsers only partially; make
+ * sure inputs, textareas, selects, and buttons pick up the app type. */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+/* Monospace context: anywhere the .font-mono class is applied. */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Tabular figures for any numeric data that should align across rows:
+ * save timestamps, dates, durations, zoom percentage. */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Headings reset so our semantic components drive size/weight without
+ * user-agent defaults leaking into the app. */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+p {
+  margin: 0;
+}
+
+/* Section title: the tier above field labels and below display moments.
+ * Paired with SectionTitle component. Slightly negative tracking matches
+ * Hanken's mid-size optical size best. */
+.section-title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--track-tight);
+}
+
+/* Display tier: reserved for the empty-state headline and any future wordmark
+ * moment. Tighter tracking feels composed at this size. */
+.display-title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--track-tight);
+}
+
+/* Field label: small, medium-weighted sentence case. Explicitly NOT uppercase:
+ * the prior all-caps-with-tracking across every label gave the product a
+ * retail-receipt aesthetic the brief rules out. */
+.field-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--track-normal);
+}
+
+/* Caption: secondary meta (save timestamp, compile time, helper text). */
+.caption {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-snug);
+}

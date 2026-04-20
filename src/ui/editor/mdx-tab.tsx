@@ -42,11 +42,27 @@ export function MdxTab() {
   return (
     <div style={{ padding: 0, height: "100%", display: "grid", gridTemplateRows: "auto 1fr" }}>
       {error && (
-        <div style={{ background: "#fce5e5", color: "#8a1f1f", padding: "8px 16px", fontSize: 12 }}>
-          {error}
+        <div
+          role="alert"
+          style={{
+            background: "var(--color-danger-soft)",
+            color: "var(--color-danger-soft-text)",
+            padding: "var(--space-xs) var(--space-md)",
+            display: "flex",
+            gap: "var(--space-xs)",
+            alignItems: "baseline",
+            fontSize: "var(--text-xs)",
+          }}
+        >
+          <strong style={{ fontWeight: "var(--weight-semibold)" }}>Parse error:</strong>
+          <span className="font-mono" style={{ whiteSpace: "pre-wrap" }}>{error}</span>
         </div>
       )}
-      <div ref={hostRef} style={{ height: "100%", fontSize: 13 }} />
+      <div
+        ref={hostRef}
+        className="font-mono"
+        style={{ height: "100%", fontSize: "var(--text-xs)", background: "var(--color-surface-muted)" }}
+      />
     </div>
   );
 }
