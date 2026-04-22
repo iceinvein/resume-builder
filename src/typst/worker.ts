@@ -91,29 +91,17 @@ async function handle(msg: WorkerRequest): Promise<WorkerResponse> {
         throw new Error(diag);
       }
 
-      // Render each page as a separate SVG string using a session.
+      // Render the full document to a single SVG, then split it into one
+      // string per page so the preview can paint each page on its own paper
+      // surface with a visible gap. Without this, every Typst page break
+      // appears as a 1.4in whitespace band (bottom margin of page N + top
+      // margin of page N+1) inside one continuous SVG.
       const svgPages: string[] = await renderer.runWithSession(
         { format: "vector", artifactContent: artifact },
         async (session) => {
+          const fullSvg = await session.renderSvg({});
           const pages = renderer.retrievePagesInfoFromSession(session);
-          if (pages.length === 0) {
-            // Fall back: render whole document as single page.
-            const svg = await session.renderSvg({});
-            return [svg];
-          }
-          const results: string[] = [];
-          let cumulativeHeight = 0;
-          for (const page of pages) {
-            const svg = await session.renderSvg({
-              window: {
-                lo: { x: 0, y: cumulativeHeight },
-                hi: { x: page.width, y: cumulativeHeight + page.height },
-              },
-            });
-            results.push(svg);
-            cumulativeHeight += page.height;
-          }
-          return results;
+          return splitSvgByPages(fullSvg, pages);
         },
       );
 
@@ -145,6 +133,85 @@ async function handle(msg: WorkerRequest): Promise<WorkerResponse> {
       message: (err as Error).message ?? String(err),
     };
   }
+}
+
+type PageInfo = { pageOffset: number; width: number; height: number };
+
+// typst.ts renders the whole document as a single SVG whose viewBox spans all
+// pages stacked vertically. To paint pages as separate surfaces we produce one
+// SVG string per page by cropping the root viewBox to that page's y-range.
+// The inner content (glyph defs, page groups) is duplicated; IDs are prefixed
+// per page so `<use href="#...">` lookups don't collide across sibling SVGs in
+// the same document. The typst.ts bootstrap `<script>` is dropped: the preview
+// doesn't need text selection / link interactivity, and leaving it in would
+// re-declare the same globals N times.
+function splitSvgByPages(fullSvg: string, pages: PageInfo[]): string[] {
+  const [first] = pages;
+  if (!first) return [];
+  if (pages.length === 1) return [fullSvg];
+
+  const stripped = stripScripts(fullSvg);
+  const unitFactor = detectUnitFactor(fullSvg, first);
+  const out: string[] = [];
+  let cumulativeY = 0;
+
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i]!;
+    const pw = page.width * unitFactor;
+    const ph = page.height * unitFactor;
+    const withIds = rewriteIds(stripped, `p${i}-`);
+    out.push(
+      rewriteRootSvg(withIds, {
+        viewBox: `0 ${cumulativeY} ${pw} ${ph}`,
+        width: `${page.width}pt`,
+        height: `${page.height}pt`,
+      }),
+    );
+    cumulativeY += ph;
+  }
+  return out;
+}
+
+function stripScripts(svg: string): string {
+  return svg.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
+}
+
+// typst.ts SVG output may use pt or px (= pt * 3) for the viewBox. Compare
+// the viewBox width to the first page's reported width_pt to infer which.
+function detectUnitFactor(svg: string, firstPage: PageInfo): number {
+  const vb = svg.match(/viewBox="([^"]+)"/);
+  if (!vb) return 1;
+  const parts = vb[1]!.trim().split(/\s+/);
+  const vbW = Number(parts[2]);
+  if (!Number.isFinite(vbW) || firstPage.width <= 0) return 1;
+  const ratio = vbW / firstPage.width;
+  return Math.abs(ratio - 3) < 0.2 ? 3 : 1;
+}
+
+function rewriteIds(svg: string, prefix: string): string {
+  return svg
+    .replace(/\bid="([^"]+)"/g, `id="${prefix}$1"`)
+    .replace(/\bhref="#([^"]+)"/g, `href="#${prefix}$1"`)
+    .replace(/\bxlink:href="#([^"]+)"/g, `xlink:href="#${prefix}$1"`);
+}
+
+function rewriteRootSvg(
+  svg: string,
+  opts: { viewBox: string; width: string; height: string },
+): string {
+  return svg.replace(/<svg\b([^>]*)>/, (_m, attrs: string) => {
+    let out = attrs;
+    out = setOrAppendAttr(out, "viewBox", opts.viewBox);
+    out = setOrAppendAttr(out, "width", opts.width);
+    out = setOrAppendAttr(out, "height", opts.height);
+    return `<svg${out}>`;
+  });
+}
+
+function setOrAppendAttr(attrs: string, name: string, value: string): string {
+  const re = new RegExp(`\\b${name}="[^"]*"`);
+  if (re.test(attrs)) return attrs.replace(re, `${name}="${value}"`);
+  return `${attrs} ${name}="${value}"`;
 }
 
 self.onmessage = async (ev: MessageEvent<WorkerRequest>) => {

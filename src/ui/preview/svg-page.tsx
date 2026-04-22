@@ -29,6 +29,12 @@ export function SvgPage({ svg, zoom }: { svg: string; zoom: number }) {
     if (!root) return;
 
     const imported = document.importNode(root, true);
+    // typst.ts sets `overflow: visible` on the root <svg> so content drawn
+    // outside the viewBox (used for internal tricks like text-selection
+    // overlays) still paints. When we crop multi-page output by setting a
+    // per-page viewBox, that same overflow causes neighbouring pages' content
+    // to bleed onto this surface. Force hidden so the viewBox actually clips.
+    imported.style.overflow = "hidden";
     host.appendChild(imported);
 
     for (const src of Array.from(host.querySelectorAll("script"))) {
