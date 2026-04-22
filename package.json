@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "bun run schema && vite build",
     "preview": "vite preview",
+    "schema": "bun run scripts/build-schema.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
     "e2e:serve": "bun run scripts/e2e.ts"
