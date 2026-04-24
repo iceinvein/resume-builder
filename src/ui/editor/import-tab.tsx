@@ -246,7 +246,7 @@ export function ImportTab() {
             </span>
             <span className="import-tab-dropzone-row">
               <Button
-                variant="primary"
+                variant="secondary"
                 size="sm"
                 onClick={() => fileInputRef.current?.click()}
               >

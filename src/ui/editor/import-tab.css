@@ -130,6 +130,15 @@
   font-size: var(--text-xs);
 }
 
+.import-tab-dropzone-row .kbd {
+  padding: 0.1875rem var(--space-xs);
+  min-height: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
 .import-tab-dropzone-caption {
   max-width: 42ch;
   font-size: var(--text-xs);
