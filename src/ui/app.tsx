@@ -206,7 +206,12 @@ export function App() {
       )}
       <Tabs />
       <TwoPane
-        left={isFirstRun ? <EmptyState /> : (tab === "form" ? <FormTab /> : tab === "mdx" ? <MdxTab /> : <ImportTab />)}
+        left={
+          tab === "import" ? <ImportTab />
+          : isFirstRun ? <EmptyState />
+          : tab === "form" ? <FormTab />
+          : <MdxTab />
+        }
         right={<PreviewPane onExportReady={(fn) => { exportRef.current = fn; }} />}
       />
       <CommandPalette
