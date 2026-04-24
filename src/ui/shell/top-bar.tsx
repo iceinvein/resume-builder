@@ -58,3 +58,51 @@ export function TopBar({ onExport, exporting, lastSavedAt }: TopBarProps) {
     </div>
   );
 }
+
+export function SharedTopBar(
+  { onDownloadSource, onExport, exporting, exportDisabled, downloadDisabled }: {
+    onDownloadSource: () => void;
+    onExport: () => void;
+    exporting: boolean;
+    exportDisabled: boolean;
+    downloadDisabled: boolean;
+  },
+) {
+  const name = useResumeStore((s) => s.resume.meta.name || s.name || "Resume");
+
+  return (
+    <div
+      className="surface-divider"
+      style={{
+        display: "flex",
+        gap: "var(--space-md)",
+        alignItems: "center",
+        padding: "var(--space-sm) var(--space-lg)",
+        background: "var(--color-canvas)",
+        flexWrap: "wrap",
+      }}
+    >
+      <div style={{ display: "grid", gap: "0.125rem", minWidth: 0, flex: 1 }}>
+        <strong style={{ fontWeight: "var(--weight-semibold)" }}>{name}</strong>
+        <span className="caption" style={{ color: "var(--color-text-tertiary)" }}>
+          Shared resume viewer
+        </span>
+      </div>
+      <Button variant="secondary" onClick={onDownloadSource} disabled={downloadDisabled}>
+        Download MDX
+      </Button>
+      <Button
+        variant="primary"
+        onClick={onExport}
+        disabled={exporting || exportDisabled}
+        aria-busy={exporting}
+        title="Download PDF (⌘⇧E)"
+      >
+        {exporting ? "Preparing PDF…" : "Download PDF"}
+      </Button>
+      <span title="Export PDF (⌘⇧E)" aria-hidden>
+        <Kbd>{["⌘", "⇧", "E"]}</Kbd>
+      </span>
+    </div>
+  );
+}

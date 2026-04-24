@@ -27,6 +27,26 @@ bun run e2e:serve    # boot dev server for the agent-browser e2e skill
 
 Bun is the package manager and test runner; Vite is the bundler. Do not swap Vite for `Bun.serve()`: the WASM worker, Tailwind v4 plugin, and `?url` imports are wired through Vite.
 
+## Sharing your resume
+
+Drop one or more resume sources into `docs/` as `.mdx` files. The shared viewer derives routes from those filenames automatically.
+
+```text
+docs/my-resume.mdx -> https://your-site.example/#/resume
+docs/dik-rana.mdx  -> https://your-site.example/#/dik-rana
+docs/dik-rana.mdx  -> https://your-site.example/#/dikrana
+```
+
+Rules:
+
+- Every `docs/*.mdx` file becomes a shareable resume document.
+- The filename stem becomes the route slug.
+- Hyphenated filenames also get a compact alias with hyphens removed, so `dik-rana.mdx` works with both `#/dik-rana` and `#/dikrana`.
+- `my-resume.mdx` keeps the legacy `#/resume` alias.
+- If your host rewrites unknown paths to `index.html`, `/resume/<slug>` and `?resume=<slug>` also work.
+
+The shared route skips the editor, loads the matching MDX automatically, and shows download actions for both the source MDX and the rendered PDF. The hash route is still the safest option for static hosting because it does not require server-side SPA rewrites.
+
 ## MDX format
 
 The importer accepts a small fixed JSX dialect (seven components: `Contact`, `Experience`, `Education`, `Skills`, `Project`, `Extra`, `Item`). Full reference: [`docs/mdx-format.md`](docs/mdx-format.md). Machine-readable JSON Schema: [`public/resume.schema.json`](public/resume.schema.json).
