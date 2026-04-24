@@ -77,20 +77,26 @@ export function ImportTab() {
       return;
     }
     setParseStatus("parsing");
+    let cancelled = false;
     const handle = setTimeout(() => {
       parseMdxToResume(text)
         .then((r) => {
+          if (cancelled) return;
           setParsed(r);
           setParseError(null);
           setParseStatus("ok");
         })
         .catch((e: Error) => {
+          if (cancelled) return;
           setParsed(null);
           setParseError(e.message);
           setParseStatus("error");
         });
     }, PARSE_DEBOUNCE_MS);
-    return () => clearTimeout(handle);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
   }, [text]);
 
   // While the buffer is empty, listen for document-level paste events so the
