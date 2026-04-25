@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Resume Builder: MDX in, typeset PDF out">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf9f4" />
+      <stop offset="1" stop-color="#f3eee3" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#paper)" />
+
+  <!-- left: editor pane -->
+  <rect x="64" y="96" width="500" height="438" rx="10" fill="#1c1b18" />
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" fill="#a7a39a">
+    <text x="92" y="148">---</text>
+    <text x="92" y="180">name: Ada Lovelace</text>
+    <text x="92" y="212">title: Engineer</text>
+    <text x="92" y="244">---</text>
+    <text x="92" y="288" fill="#fbf9f4">&lt;Contact email="ada@..." /&gt;</text>
+    <text x="92" y="336" fill="#fbf9f4">## Experience</text>
+    <text x="92" y="380" fill="#fbf9f4">&lt;Experience</text>
+    <text x="120" y="408" fill="#fbf9f4">company="Analytical Engine"</text>
+    <text x="120" y="436" fill="#fbf9f4">role="Engineer"&gt;</text>
+    <text x="92" y="476" fill="#a7a39a">- Wrote the first algorithm.</text>
+    <text x="92" y="504" fill="#fbf9f4">&lt;/Experience&gt;</text>
+  </g>
+
+  <!-- right: pdf preview -->
+  <rect x="636" y="96" width="500" height="438" rx="10" fill="#ffffff" stroke="#e6e0d2" />
+  <g font-family="Hanken Grotesk, system-ui, sans-serif" fill="#1c1b18">
+    <text x="668" y="158" font-size="36" font-weight="700">Ada Lovelace</text>
+    <text x="668" y="190" font-size="18" fill="#5a564d">Engineer</text>
+    <line x1="668" y1="214" x2="1104" y2="214" stroke="#e6e0d2" />
+    <text x="668" y="252" font-size="20" font-weight="600">Experience</text>
+    <text x="668" y="284" font-size="16">Analytical Engine Co - Engineer</text>
+    <text x="668" y="310" font-size="14" fill="#5a564d">1843 - present</text>
+    <text x="668" y="344" font-size="14" fill="#1c1b18">- Wrote the first algorithm.</text>
+    <line x1="668" y1="376" x2="1104" y2="376" stroke="#e6e0d2" />
+    <text x="668" y="414" font-size="20" font-weight="600">Skills</text>
+    <text x="668" y="442" font-size="14" fill="#1c1b18">Mathematics. Computing. Notation.</text>
+  </g>
+
+  <!-- title strip -->
+  <g font-family="Hanken Grotesk, system-ui, sans-serif">
+    <text x="64" y="64" font-size="28" font-weight="700" fill="#1c1b18">Resume Builder</text>
+    <text x="290" y="64" font-size="20" fill="#5a564d">MDX in, typeset PDF out</text>
+    <circle cx="1136" cy="56" r="6" fill="#d97757" />
+  </g>
+</svg>

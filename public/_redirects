@@ -1,0 +1,4 @@
+# Netlify SPA fallback.
+# Lets shareable routes like /resume/<slug> resolve to index.html
+# while still serving real assets (favicon.svg, sitemap.xml, robots.txt, fonts, etc.).
+/*    /index.html   200

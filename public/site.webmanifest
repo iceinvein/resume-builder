@@ -1,0 +1,19 @@
+{
+  "name": "Resume Builder",
+  "short_name": "Resume",
+  "description": "Write a resume in MDX, preview live, export a typeset PDF. Runs in your browser, drafts save locally.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fbf9f4",
+  "theme_color": "#fbf9f4",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Resume Builder">
+  <rect width="64" height="64" rx="12" fill="#1c1b18" />
+  <g fill="none" stroke="#fbf9f4" stroke-width="3" stroke-linecap="round">
+    <path d="M18 18 H46" />
+    <path d="M18 28 H40" />
+    <path d="M18 38 H46" />
+    <path d="M18 48 H34" />
+  </g>
+  <circle cx="50" cy="48" r="4" fill="#d97757" />
+</svg>
