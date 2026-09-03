@@ -4,7 +4,7 @@ import { Tabs } from "./shell/tabs";
 import { TwoPane } from "./shell/layout";
 import { useResumeStore } from "./shell/use-store";
 import { bindAutosave, hydrate } from "../state/persist";
-import { resumeStore } from "../state/store";
+import { resumeStore, isFirstRun as isFirstRunState } from "../state/store";
 import { FormTab } from "./form/form-tab";
 import { MdxTab } from "./editor/mdx-tab";
 import { ImportTab } from "./editor/import-tab";
@@ -32,7 +32,8 @@ export function App() {
   const tab = useResumeStore((s) => s.tab);
   const resume = useResumeStore((s) => s.resume);
   const isSharedResume = route.mode === "shared-resume";
-  const isFirstRun = resume.meta.name === emptyResume.meta.name && resume.experience.length === 0;
+  const started = useResumeStore((s) => s.started);
+  const isFirstRun = isFirstRunState({ resume, started });
   const [lastSavedAt, setLastSavedAt] = useState<number | null>(null);
   const [env, setEnv] = useState<EnvStatus | null>(null);
   const [exporting, setExporting] = useState(false);

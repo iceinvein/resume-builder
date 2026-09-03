@@ -65,7 +65,7 @@ Form edits mutate the Zustand `Resume` → autosaved to IDB → serialised to MD
 - Store is a **vanilla** Zustand store (`zustand/vanilla`), not the React hook form. The React binding lives in `src/ui/shell/use-store.ts`.
 - The app has three tabs driven by `resumeStore.tab` (`form | mdx | import`); keep the tri-state in sync when adding new edit surfaces.
 - Autosave debounce is 1000ms; tests that mutate the store and then assert persistence must await that window or call the persistence function directly.
-- First-run empty state is detected by `meta.name === emptyResume.meta.name && experience.length === 0`; don't pre-fill the default name or the empty state disappears.
+- First-run empty state is gated by `isFirstRun()` in `src/state/store.ts`: the explicit `started` flag wins, and the content check (`meta.name === emptyResume.meta.name && experience.length === 0`) only stands in for drafts saved before that flag existed. Any new "begin editing" entry point must set `started: true`, or it will bounce straight back to the empty state. `started` is persisted alongside the draft.
 - TS config has `exactOptionalPropertyTypes: true` and `noUncheckedIndexedAccess: true`; `foo?: string` is not assignable to `foo: string | undefined`, and array access is `T | undefined`.
 - Tests preload happy-dom via `tests/setup.ts` (configured in `bunfig.toml`). Don't re-register globals inside tests.
 - E2E is not a scripted `bun test`; use `bun run e2e:serve` + the agent-browser skill as documented in `tests/e2e/smoke.test.ts`.

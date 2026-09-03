@@ -8,6 +8,7 @@ export type ResumeStore = {
   resume: Resume;
   tab: Tab;
   name: string;
+  started: boolean;
   setTab: (t: Tab) => void;
   setName: (n: string) => void;
   setResume: (r: Resume) => void;
@@ -41,6 +42,7 @@ export function createResumeStore() {
     resume: emptyResume,
     tab: "form",
     name: "Untitled Resume",
+    started: false,
     setTab: (tab) => set({ tab }),
     setName: (name) => set({ name }),
     setResume: (resume) => set({ resume }),
@@ -176,3 +178,15 @@ export function createResumeStore() {
 }
 
 export const resumeStore = createResumeStore();
+
+// `started` has to be tracked separately from the resume content: "Start blank"
+// sets the resume to `emptyResume`, so a content-only check can never leave the
+// first-run screen. Drafts saved before this flag existed have no `started`, so
+// the content check still stands in for them.
+export function isFirstRun(state: Pick<ResumeStore, "resume" | "started">): boolean {
+  if (state.started) return false;
+  return (
+    state.resume.meta.name === emptyResume.meta.name &&
+    state.resume.experience.length === 0
+  );
+}

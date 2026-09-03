@@ -19,7 +19,7 @@ const choices: Choice[] = [
     description: "Structured fields for every section. Recommended if this is your first resume or you want guardrails.",
     shortcut: "N",
     actionLabel: "Start blank",
-    action: () => resumeStore.setState({ resume: emptyResume, tab: "form" }),
+    action: () => resumeStore.setState({ resume: emptyResume, tab: "form", started: true }),
     variant: "primary",
   },
   {
@@ -27,7 +27,7 @@ const choices: Choice[] = [
     description: "Drop a .mdx file or paste markdown. Useful if you version-control your resume or migrated from another tool.",
     shortcut: "I",
     actionLabel: "Import MDX",
-    action: () => resumeStore.setState({ tab: "import" }),
+    action: () => resumeStore.setState({ tab: "import", started: true }),
     variant: "secondary",
   },
   {
@@ -35,7 +35,7 @@ const choices: Choice[] = [
     description: "Load a sample resume to study the structure. Replaces any draft you have.",
     shortcut: "E",
     actionLabel: "Load example",
-    action: () => resumeStore.setState({ resume: exampleResume, tab: "form" }),
+    action: () => resumeStore.setState({ resume: exampleResume, tab: "form", started: true }),
     variant: "ghost",
   },
 ];

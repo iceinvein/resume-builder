@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { createResumeStore } from "../src/state/store";
+import { createResumeStore, isFirstRun } from "../src/state/store";
 import { emptyResume } from "../src/schema/defaults";
 
 test("initial state is empty resume", () => {
@@ -85,4 +85,27 @@ test("moveLink reorders contact links", () => {
   });
   store.getState().moveLink(0, 1);
   expect(store.getState().resume.contact.links?.map((l) => l.label)).toEqual(["B", "A"]);
+});
+
+test("first-run screen shows on a fresh store", () => {
+  const store = createResumeStore();
+  expect(isFirstRun(store.getState())).toBe(true);
+});
+
+test("starting a blank resume leaves the first-run screen", () => {
+  const store = createResumeStore();
+  store.setState({ resume: emptyResume, tab: "form", started: true });
+  expect(isFirstRun(store.getState())).toBe(false);
+});
+
+test("a draft saved before the started flag still skips the first-run screen", () => {
+  const store = createResumeStore();
+  store.setState({
+    resume: {
+      ...emptyResume,
+      experience: [{ company: "A", role: "Dev", start: "2024-01", end: "present", bullets: [] }],
+    },
+    started: false,
+  });
+  expect(isFirstRun(store.getState())).toBe(false);
 });
