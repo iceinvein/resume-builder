@@ -18,16 +18,24 @@ export const DEFAULT_TEMPLATE_SOURCE = String.raw`
   }
 }
 
+// sticky keeps the heading with the first entry under it, and breakable: false
+// keeps the label and its rule together, so a section can never split across a
+// page boundary the way "Professional Affiliations" did.
 #let section-heading(body) = {
   v(0.8em)
-  text(size: 9.5pt, weight: 600, tracking: 0.10em, upper(body))
-  v(-0.15em)
-  line(length: 100%, stroke: 0.5pt + rgb("#1a1a1a"))
+  // above/below restate Typst's default block spacing, which wrapping the
+  // heading in a block would otherwise suppress and tighten the section rhythm.
+  block(sticky: true, breakable: false, above: 1.2em, below: 1.2em)[
+    #text(size: 9.5pt, weight: 600, tracking: 0.10em, upper(body))
+    #v(-0.15em)
+    #line(length: 100%, stroke: 0.5pt + rgb("#1a1a1a"))
+  ]
   v(0.3em)
 }
 
 #let entry-header(left-content, right-content) = grid(
   columns: (1fr, auto),
+  column-gutter: 1em,
   align(left)[#left-content],
   align(right)[#text(fill: meta-color)[#right-content]],
 )
@@ -116,7 +124,7 @@ export const DEFAULT_TEMPLATE_SOURCE = String.raw`
   for p in resume.projects {
     let right = if "tech" in p { p.tech.join(" · ") } else { "" }
     entry-header(
-      [#text(weight: 500)[#if "url" in p [#link(p.url)[#p.name]] else [#p.name]]#if "description" in p [ - #p.description]],
+      [#text(weight: 500)[#if "url" in p [#link(p.url)[#p.name]] else [#p.name]]#if "description" in p [#text(" - ")#p.description]],
       [#right],
     )
     if "bullets" in p {
@@ -133,7 +141,7 @@ export const DEFAULT_TEMPLATE_SOURCE = String.raw`
     for it in ex.items {
       let right = if "date" in it { it.date } else { "" }
       entry-header(
-        [#text(weight: 500)[#it.title]#if "subtitle" in it [ - #it.subtitle]],
+        [#text(weight: 500)[#it.title]#if "subtitle" in it [#text(" - ")#it.subtitle]],
         [#right],
       )
       v(0.2em)
