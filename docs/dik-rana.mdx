@@ -1,17 +1,19 @@
 ---
 name: Dik Rana
 title: Senior Software Engineer
-summary: Product-minded full-stack engineer shipping complex, data-heavy React
-  apps on AWS with an agentic-first workflow I practise daily and coach teams to
-  adopt. 14+ years shipping commercial web applications end-to-end, deep in the
-  modern React/TypeScript stack with production AWS experience (Lambda, ECS,
-  DynamoDB, S3) and a strong product instinct honed across finance, healthcare,
-  and regulated domains. I build with an agentic-first workflow (Claude Code,
-  Codex, custom MCP tooling) and lead its adoption across delivery teams,
-  codifying the agent guidelines, skills, and review practices that make
-  AI-assisted engineering fast and reliable. I write about these practices on my
-  blog and open-source the tooling behind them on GitHub. AWS Solutions
-  Architect, Professional.
+summary: Product-minded full-stack engineer with 14+ years shipping commercial web
+  applications end-to-end, deep in React and TypeScript, with production
+  backends in Node.js, Go, .NET, and Rust on AWS (Lambda, ECS, DynamoDB, S3,
+  Bedrock) and a strong product instinct honed across finance, healthcare, and
+  regulated domains. I build with an agentic-first workflow (Claude Code, Codex,
+  custom MCP tooling) and lead its adoption across delivery teams, codifying the
+  agent guidelines, skills, and review practices that make AI-assisted
+  engineering fast and reliable. Most recently I designed the AI-driven method,
+  tooling, and delivery lifecycle behind a multi-product legacy rebuild
+  programme, rolled it out to the client's existing engineering teams, and lead
+  engineering on an in-house secure RAG product built on Claude via Amazon
+  Bedrock. I write about these practices on my blog and open-source the tooling
+  behind them on GitHub. AWS Solutions Architect, Professional.
 ---
 
 <Contact email="dikrana@msn.com" phone="0431 840 116" location="Perth, WA 6153" links={[{"label":"Github","url":"https://github.com/iceinvein"},{"label":"Blog","url":"https://dikrana.dev/"},{"label":"LinkedIn","url":"https://linkedin.com/in/ranadik"}]} />
@@ -20,16 +22,22 @@ summary: Product-minded full-stack engineer shipping complex, data-heavy React
 
 <Experience company="Mechanical Rock" role="Senior Software Consultant / Lead Engineer" location="Perth, Australia" start="2022-02" end="present">
 - Partner directly with customers and domain experts to frame problems, validate solutions, and measure outcomes, often standing in for product and design on smaller engagements.
-- Architected and built an AI provenance desktop platform (Tauri v2 + Rust + React, SQLCipher, ONNX-based local embeddings, ElysiaJS/PostgreSQL backend) that proves document authorship via tamper-proof audit reports.
+- Designed and led an AI-driven legacy modernisation programme for an enterprise SaaS vendor, re-specifying five legacy products (2,797 cited requirements, zero unaccounted surface) and resolving 900+ open product decisions with the product owner to reach build-ready specs.
+- Top contributor of 24 engineers on the lead rebuild (.NET 10 vertical slices, Vue 3, PostgreSQL, Auth0 multi-tenancy): 376 merged PRs, 43% of architecture decision records, legacy data migration, and the delivery CLI (gates, forecasting, review evaluation, parity tracking) every other rebuild now runs on.
+- Authored an internal Claude Code plugin marketplace (13 plugins, 71 skills, 270+ merged PRs) codifying an AI product-development lifecycle, with gates enforced by tooling after an audit showed most PRs went unreviewed when review was voluntary.
+- Rolled the lifecycle out to existing teams through enablement sessions and reusable playbooks, including a long-lived monolith where AI-assisted commits rose more than tenfold in seven weeks across 17 engineers, and wrote the pilot readiness assessment that reframed adoption as a product-ownership problem.
+- Lead engineer on an in-house multi-tenant secure-RAG SaaS product (Go, React, Terraform, Amazon Bedrock), carrying 99% of commits since June 2026 and shipping agentic proposal and slide-deck workflows on Claude with source-fidelity checks and one-transaction undo.
+- Built its LLM reliability and cost layer (per-organisation quota and concurrency guards, Bedrock overload handling, offline eval harnesses that gate prompt changes) and per-worktree local stacks that let coding agents work in parallel inside tenant-isolation and secrets rules.
+- Founding architect and lead engineer of an AI provenance platform (79% of ~6,900 commits since December 2025, 90+ releases): a Tauri v2 + Rust desktop recorder with SQLCipher storage and on-device OCR and ONNX embeddings, an ElysiaJS/PostgreSQL backend, and a React web portal.
+- Built its evidence chain end-to-end: hash-chained capture integrity, a quality-gated authorship score, Ed25519-signed server receipts, and OpenTimestamps anchoring of report Merkle roots from a scheduled Rust worker on ECS, on a Terraform-managed multi-account AWS landing zone.
+- Top contributor of eight engineers on a cross-platform complex-care coordination platform (Expo / React Native, Hono, PostgreSQL on AWS), authoring 38% of all commits after joining in its first weeks, and most of its clinical model: timezone-aware care-plan schedules and observation forms for medication, enteral feeds, vitals, seizures, BSL/ketones, and respiratory care.
+- Built its protected-health-information controls (hash-chained, tamper-evident audit logging, access logs behind an admin audit dashboard, biometric unlock) and consolidated it into a typed pnpm monorepo with shared Zod schemas, Hono RPC, and agent rules for patient data.
+- Owned the rebuild of mechanicalrock.io as lead engineer (500 of 520 commits since March 2026), moving a two-CMS Pages Router + MUI site to Next.js 16, React 19, and Tailwind v4 on an embedded Sanity Studio with Visual Editing and a schema-driven page builder marketing uses without engineering.
+- Cut homepage JavaScript from ~463KB to ~261KB gzipped, lifting mobile Lighthouse performance from 78-82 to 85-91 and LCP from 4.4-5.4s to 3.1-4.1s across key pages, with a build-failing regression test that keeps editor code out of public bundles.
 - Built a Rust-based Code Intelligence MCP Server that augments AI coding agents with semantic search, call graphs, and impact analysis over local codebases, combining Tree-sitter parsing, hybrid BM25 + vector retrieval, and on-device LLM enrichment.
-- Embedded agentic coding workflows (Claude Code, Codex) into day-to-day delivery, authoring repo-level agent guidelines, skills, and custom MCP tooling to accelerate features, refactors, and code review without sacrificing quality.
-- Coached engineers across the consultancy and client teams on agentic workflows, running enablement sessions and reusable playbooks that lifted AI-assisted delivery from ad-hoc experiments to a dependable, repeatable practice.
-- Led development of a patient and caregiver management application (React Native + Node.js + PostgreSQL on AWS), improving scheduling, appointment tracking, and communication workflows.
 - Modernised a lottery platform to React + AWS serverless, scaling to 50K+ daily transactions and coaching client developers to sustain new features.
 - Architected a high-performance capital-raise trading platform with a Next.js frontend and Java microservices over gRPC for low-latency execution.
-- Refreshed the company website with Astro + Sanity (SSR), improving SEO, page performance, and editorial workflows.
 - Launched a coach-player data analysis app using React + Supabase with interactive dashboards for sports decision-making.
-- Designed caching and state management strategies, cutting page load times and boosting engagement.
 </Experience>
 
 <Experience company="Risk Management Technologies" role="SRE Lead" location="Perth, Australia" start="2021-05" end="2021-12">
@@ -56,35 +64,32 @@ summary: Product-minded full-stack engineer shipping complex, data-heavy React
 
 ## Skills
 
-<Skills group="Frontend & Mobile" items={["React","React Native","Next.js","Angular","Astro","TypeScript","SSR/ISR","Offline First","Material UI","Tailwind CSS","shadcn UI","HeroUI","Schema-driven forms","Interactive data visualisation"]} />
-<Skills group="Backend & APIs" items={["Node.js (Express, Hono)","ElysiaJS on Bun","Rust (Tauri v2)","PostgreSQL","Supabase","Drizzle ORM","Convex","SQLCipher","GraphQL","REST / OpenAPI","gRPC","GROQ","API performance"]} />
-<Skills group="AI & Agentic Engineering" items={["Claude Code","OpenAI Codex","Agentic workflow design & rollout","Team enablement & coaching on agentic coding","MCP server authoring","Repo-level agent context design","ONNX Runtime","llama.cpp (GGUF, Metal GPU)","Embeddings (AllMiniLM, CLIP, Qwen2.5-Coder)","Vector search (HNSW, LanceDB, BM25 + RRF)","LLM-assisted code review and migration planning"]} />
-<Skills group="Cloud & DevOps" items={["AWS (Lambda, ECS, CloudFormation, S3, DynamoDB, RDS, API Gateway, SNS, SQS)","CI/CD (Jenkins, GitLab, GitHub Actions, Bitbucket Pipelines)","Terraform","Prometheus","Grafana","ELK","SonarQube","Dependency Check"]} />
-<Skills group="Architecture & Leadership" items={["Product discovery and end-to-end delivery","Cloud migration strategy","Legacy platform modernisation","SRE best practices","Agentic workflow enablement & upskilling","Team mentoring and enablement","Stakeholder engagement"]} />
+<Skills group="Frontend & Mobile" items={["React","React Native","Next.js","Angular","Vue 3","Astro","TypeScript","SSR/ISR","Offline First","Material UI","Tailwind CSS","shadcn UI","HeroUI","Schema-driven forms","Interactive data visualisation","Core Web Vitals & Lighthouse optimisation"]} />
+<Skills group="Backend & APIs" items={["Node.js (Express, Hono)","C# / .NET 10 (minimal APIs, EF Core)","Go (Chi, sqlc, SQS workers)","ElysiaJS on Bun","Rust (Tauri v2)","PostgreSQL","Supabase","Drizzle ORM","Convex","SQLCipher","GraphQL","REST / OpenAPI","gRPC","Sanity CMS (schemas, GROQ, Visual Editing)","API performance"]} />
+<Skills group="AI & Agentic Engineering" items={["Claude Code (plugins, skills, hooks, GitHub Actions)","OpenAI Codex","Agentic workflow design & rollout","AI-driven legacy re-specification","Agent & LLM eval harnesses, prompt regression and adversarial review gates","Team enablement & coaching on agentic coding","MCP server authoring","Amazon Bedrock (Claude) & AgentCore","RAG pipelines (ingestion, chunking, retrieval)","Repo-level agent context design","ONNX Runtime","llama.cpp (GGUF, Metal GPU)","Embeddings (AllMiniLM, CLIP, Qwen2.5-Coder)","Vector search (HNSW, LanceDB, BM25 + RRF)","LLM-assisted code review and migration planning"]} />
+<Skills group="Cloud & DevOps" items={["AWS (Lambda, ECS, CloudFormation, S3, DynamoDB, RDS, API Gateway, SNS, SQS)","CI/CD (Jenkins, GitLab, GitHub Actions, Bitbucket Pipelines)","Vercel","Terraform","Prometheus","Grafana","ELK","SonarQube","Dependency Check"]} />
+<Skills group="Architecture & Leadership" items={["Product discovery and end-to-end delivery","Cloud migration strategy","Legacy platform modernisation","AI product-development lifecycle design","SRE best practices","Agentic workflow enablement & upskilling","Team mentoring and enablement","Stakeholder engagement"]} />
 
 ## Projects
 
-<Project name="AI Provenance Platform" description="Local-first desktop app (Tauri v2 + Rust, SQLCipher, on-device ONNX embeddings with HNSW search) paired with an ElysiaJS/Bun + PostgreSQL backend, producing tamper-proof audit reports that link final documents to recorded work history." />
+<Project name="AI Provenance Platform" description="Local-first desktop recorder (Tauri v2 + Rust, SQLCipher, on-device OCR and ONNX embeddings with HNSW search) with an ElysiaJS/Bun + PostgreSQL backend and React web portal. Produces tamper-evident authorship reports that link a final document to recorded work history, with a quality-gated authorship score, signed server receipts, and OpenTimestamps anchoring that anyone can verify with standard tools." />
 
 <Project name="Code Intelligence MCP Server" description="Rust code-indexing engine that gives AI coding agents semantic understanding of a codebase via MCP. Combines Tree-sitter parsing, BM25 (Tantivy) + vector search (LanceDB) fused via RRF, on-device embeddings, LLM-generated symbol descriptions (Qwen2.5-Coder via llama.cpp, Metal GPU), and graph intelligence (call hierarchies, PageRank, impact analysis) across 23 MCP tools." />
 
-<Project name="Lottery Platform Modernisation" description="Led modernisation of a legacy lottery platform to React + AWS serverless, sustaining 50K+ daily transactions while improving deploy frequency and reliability, and coaching the client's engineers to own the new platform after handover." />
-
-<Project name="High-Performance Capital Raise Trading Platform" description="Next.js front-end backed by Node.js microservices over gRPC, meeting strict low-latency targets and shaped around real trading workflows with finance stakeholders." />
-
-<Project name="Patient & Caregiver Scheduling App" description="Cross-platform React Native + Node.js + PostgreSQL app on AWS streamlining caregiver-patient coordination with scheduling, notifications, and data security." />
-
-<Project name="Coach-Player Analysis Tool" description="Supabase + React app delivering real-time insights and interactive sports dashboards."/>
+<Project name="Coach-Player Analysis Tool" description="Supabase + React app delivering real-time insights and interactive sports dashboards." />
 
 <Project name="Real-time Chat App" description="React + Convex chat with real-time communication and offline support." />
 
 ## Selected Outcomes
 
 <Extra heading="Selected Outcomes">
-  <Item title="Led adoption of agentic coding (Claude Code, Codex) across consultancy and client teams, coaching engineers and codifying the agent guidelines, skills, and MCP tooling that keep AI-assisted delivery fast and reliable." />
+  <Item title="Designed the AI-driven modernisation method for a multi-product legacy rebuild programme, recovering 2,797 requirements from five undocumented .NET Framework products with every surface element accounted for, then was the top contributor of 24 engineers on the lead rebuild." />
+  <Item title="Built an internal Claude Code plugin marketplace (13 plugins, 71 skills) defining an AI product-development lifecycle with CLI-enforced gates, then coached existing client teams onto it; on a long-lived monolith, AI-assisted commits rose more than tenfold within seven weeks across 17 engineers." />
+  <Item title="Lead engineer on an in-house multi-tenant secure-RAG SaaS product, authoring 99% of commits since June 2026 across a Go backend, React SPA, and Terraform on AWS, and shipping agentic proposal, slide-deck, and chat workflows on Claude via Amazon Bedrock." />
+  <Item title="Top contributor of eight engineers on a cross-platform complex-care coordination app (iOS, Android, web), building most of its clinical model (18 observation types across 8 categories) and a tamper-evident, hash-chained audit trail over protected health information." />
+  <Item title="Rebuilt the company website on Next.js 16 and Sanity as its lead engineer, cutting homepage JavaScript by over 40% and lifting mobile Lighthouse performance to 85-91 across key pages." />
   <Item title="Scaled a modernised lottery platform to 50K+ daily transactions on AWS serverless, and coached the client team to own it post-handover." />
-  <Item title="Shipped an AI provenance desktop app end-to-end as sole architect and engineer, from problem framing through production." />
-  <Item title="Cut deploys from hours to minutes and regression testing from days to hours across a regulated enterprise." />
+  <Item title="Founding architect and lead engineer of an AI provenance platform, from problem framing through production: 79% of ~6,900 commits and 90+ releases across a Rust desktop app, TypeScript backend, and AWS infrastructure." />
 </Extra>
 
 ## Certifications
